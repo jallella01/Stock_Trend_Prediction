@@ -1,0 +1,8 @@
+pandas
+numpy
+matplotlib
+tensorflow
+pandas_datareader
+yfinance
+datetime
+plotly
