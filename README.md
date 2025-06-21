@@ -21,7 +21,7 @@ A Flask-based web application that predicts and visualizes stock price trends fo
 
 ## 🖥️ Screenshots
 
-![App Screenshot](static/ema_20_50.png)
+![App Screenshot](PredictStockTrend(FLASK)/static/ema_20_50.png)
 *Example: Closing Price vs Time (20 & 50 Days EMA)*
 
 ---
