@@ -5,10 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Trend Prediction</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
+        :root {
+            --main-bg: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
+            --card-bg: rgba(255,255,255,0.97);
+            --primary: #43c6ac;
+            --secondary: #191654;
+            --accent: #f7971e;
+            --danger: #ff5858;
+            --info: #36d1c4;
+            --shadow: 0 8px 32px rgba(67,198,172,0.12), 0 1.5px 6px rgba(25,22,84,0.08);
+        }
         body {
-            background: linear-gradient(120deg, #e0eafc, #cfdef3 100%);
+            background: var(--main-bg);
             min-height: 100vh;
+            animation: gradientBG 10s ease-in-out infinite alternate;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
         .container {
             max-width: 1100px;
@@ -16,8 +33,15 @@
             margin-bottom: 40px;
         }
         .card {
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            background: var(--card-bg);
+            border: none;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 16px 48px rgba(67,198,172,0.18), 0 3px 12px rgba(25,22,84,0.12);
+            transform: translateY(-4px) scale(1.01);
         }
         .chart-container {
             margin-top: 30px;
@@ -31,23 +55,128 @@
         .footer {
             margin-top: 40px;
             padding: 20px 0;
-            background: #f8f9fa;
+            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
             text-align: center;
-            color: #888;
+            color: #fff;
             border-radius: 12px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(67,198,172,0.10);
         }
         .spinner-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.7);
+            background: rgba(67,198,172,0.08);
             z-index: 9999;
             display: none;
             align-items: center;
             justify-content: center;
         }
+        .spinner-border {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        .btn-primary, .btn-success {
+            transition: background 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+            border-radius: 8px;
+            letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #191654 0%, #43c6ac 100%);
+            box-shadow: 0 2px 8px rgba(67,198,172,0.15);
+            color: #fff;
+        }
+        .btn-success {
+            background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%);
+            color: #191654;
+            border: none;
+        }
+        .btn-success:hover {
+            background: linear-gradient(90deg, #ffd200 0%, #f7971e 100%);
+            color: #191654;
+            box-shadow: 0 2px 8px rgba(247,151,30,0.15);
+        }
+        .btn-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .btn-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        .collapse img {
+            transition: transform 0.3s;
+        }
+        .collapse.show img {
+            transform: scale(1.03);
+        }
+        .form-label {
+            font-weight: 600;
+            color: var(--secondary);
+            letter-spacing: 1px;
+        }
+        .logout-btn {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 10000;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(67,198,172,0.12);
+            border: none;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .logout-btn:hover {
+            background: #ffe0e0;
+        }
+        .badge.bg-info {
+            background: linear-gradient(90deg, #43c6ac 0%, #f8ffae 100%);
+            color: #191654 !important;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+        .alert-danger {
+            background: linear-gradient(90deg, #ff5858 0%, #f7971e 100%);
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .form-control:focus {
+            border-color: #43c6ac;
+            box-shadow: 0 0 0 0.2rem rgba(67,198,172,0.15);
+        }
+        @media (max-width: 600px) {
+            .container { margin-top: 10px; margin-bottom: 10px; }
+            .footer { font-size: 0.95rem; }
+            .logout-btn { top: 10px; right: 10px; width: 40px; height: 40px; }
+        }
     </style>
 </head>
 <body>
+    <!-- Optional: Logout Button (show only if user is logged in) -->
+    {% if session and session.get('user') %}
+    <form action="{{ url_for('logout') }}" method="get">
+        <button type="submit" class="logout-btn" title="Logout">
+            <i class="fas fa-sign-out-alt fa-lg" style="color:#ff5858;"></i>
+        </button>
+    </form>
+    {% endif %}
+
     <div class="spinner-overlay" id="spinnerOverlay">
         <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status">
             <span class="visually-hidden">Loading...</span>
@@ -55,24 +184,31 @@
     </div>
     <div class="container">
         <div class="card p-4">
-            <h1 class="text-center mb-4">📈 Stock Trend Prediction</h1>
+            <h1 class="text-center mb-4" style="font-weight:700; letter-spacing:1px; color:var(--secondary);">
+                <i class="fa-solid fa-chart-line" style="color:var(--primary);"></i> Stock Trend Prediction
+            </h1>
             {% if error %}
             <div class="alert alert-danger" role="alert">
-                {{ error }}
+                <i class="fa-solid fa-circle-exclamation"></i> {{ error }}
             </div>
             {% endif %}
             <form method="POST" onsubmit="showSpinner()">
                 <div class="mb-3">
                     <label for="stock" class="form-label">Enter Stock Ticker:</label>
                     <input type="text" class="form-control" id="stock" name="stock" value="{{ request.form.stock or 'POWERGRID.NS' }}" required>
+                    <div class="form-text">
+                        Example: <span class="badge bg-info text-dark">POWERGRID.NS</span> <span class="badge bg-info text-dark">RELIANCE.NS</span> <span class="badge bg-info text-dark">AAPL</span>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Predict</button>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Predict
+                </button>
             </form>
             
             {% if plot_path_ema_20_50 %}
             <div class="chart-container">
                 <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#ema20_50" aria-expanded="true">
-                    <h5>📊 Closing Price vs Time (20 & 50 Days EMA)</h5>
+                    <i class="fa-solid fa-chart-area"></i> <h5 style="display:inline;">Closing Price vs Time (20 & 50 Days EMA)</h5>
                 </button>
                 <div class="collapse show" id="ema20_50">
                     <img src="{{ url_for('static', filename='ema_20_50.png') }}" class="img-fluid rounded shadow" alt="EMA 20 & 50">
@@ -83,7 +219,7 @@
             {% if plot_path_ema_100_200 %}
             <div class="chart-container">
                 <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#ema100_200" aria-expanded="false">
-                    <h5>📊 Closing Price vs Time (100 & 200 Days EMA)</h5>
+                    <i class="fa-solid fa-chart-area"></i> <h5 style="display:inline;">Closing Price vs Time (100 & 200 Days EMA)</h5>
                 </button>
                 <div class="collapse" id="ema100_200">
                     <img src="{{ url_for('static', filename='ema_100_200.png') }}" class="img-fluid rounded shadow" alt="EMA 100 & 200">
@@ -94,7 +230,7 @@
             {% if plot_path_prediction %}
             <div class="chart-container">
                 <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#prediction" aria-expanded="false">
-                    <h5>🤖 Prediction vs Original Trend</h5>
+                    <i class="fa-solid fa-robot"></i> <h5 style="display:inline;">Prediction vs Original Trend</h5>
                 </button>
                 <div class="collapse" id="prediction">
                     <img src="{{ url_for('static', filename='stock_prediction.png') }}" class="img-fluid rounded shadow" alt="Prediction vs Original">
@@ -104,7 +240,7 @@
             
             {% if data_desc %}
             <div class="table-responsive">
-                <h4 class="mt-4">Descriptive Data (Jan 2000 - Nov 2024)</h4>
+                <h4 class="mt-4" style="color:var(--primary);"><i class="fa-solid fa-table"></i> Descriptive Data (Jan 2000 - Nov 2024)</h4>
                 {{ data_desc | safe }}
             </div>
             {% endif %}
@@ -112,20 +248,25 @@
             {% if dataset_link %}
             <div class="download-link">
                 <a href="{{ url_for('download_file', filename=dataset_link.split('/')[-1]) }}" class="btn btn-success w-100" download>
-                    ⬇️ Download Dataset (CSV)
+                    <i class="fa-solid fa-download"></i> Download Dataset (CSV)
                 </a>
             </div>
             {% endif %}
         </div>
         <div class="footer mt-5">
-            &copy; {{ 2025 }} Stock Trend Prediction | Powered by Flask &amp; LSTM | Designed by Karthikeya
+            &copy; {{ 2025 }} Stock Trend Prediction | Powered by <span style="color:var(--primary);">Flask</span> &amp; <span style="color:var(--accent);">LSTM</span> | Designed by <b>Karthikeya</b>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script>
         function showSpinner() {
             document.getElementById('spinnerOverlay').style.display = 'flex';
         }
+        // Optional: auto-hide spinner after 30s in case of error
+        setTimeout(() => {
+            document.getElementById('spinnerOverlay').style.display = 'none';
+        }, 30000);
     </script>
 </body>
 </html>
