@@ -17,9 +17,13 @@ A Flask-based web application that predicts and visualizes stock price trends fo
 - **Modern, responsive UI** with Bootstrap 5
 - **Clear error handling** for missing or malformed data
 
-## 🖥️ Output Demo
+---
 
-▶️ [Watch Output Demo Video](https://drive.google.com/your-video-link)
+
+## 🖥️ Output Screen Recording
+
+▶️ [Click to watch the output video](PredictStockTrend(FLASK)/static/StockTrendPrediction_Output.mp4)
+
 
 
 ---
