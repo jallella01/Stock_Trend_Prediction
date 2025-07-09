@@ -21,7 +21,7 @@ A Flask-based web application that predicts and visualizes stock price trends fo
 
 ## 🖥️ Output_ScreenRecording
 
-![App Screenshot](PredictStockTrend(FLASK)/static/ema_20_50.png)
+![App ScreenRecording]PredictStockTrend(FLASK)/static/StockTrendPrediction_Output.mp4
 
 ---
 
