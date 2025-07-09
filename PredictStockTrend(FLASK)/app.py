@@ -35,37 +35,17 @@ def index():
             csv_path = f"static/{stock}_dataset.csv"
             if os.path.exists(csv_path):
                 try:
-                    # Try with skiprows=2 (your usual format)
-                    df = pd.read_csv(csv_path, skiprows=2)
-                    # If 'Date' is not in columns, try without skiprows
-                    if 'Date' not in df.columns:
-                        df = pd.read_csv(csv_path)
-                    # Remove any rows where 'Date' is missing
-                    if 'Date' in df.columns:
-                        df = df.dropna(subset=['Date'])
-                        df.set_index('Date', inplace=True)
-                    else:
+                    df = pd.read_csv(csv_path)
+                    df.columns = df.columns.str.strip()
+                    if 'Date' not in df.columns or 'Close' not in df.columns:
                         return render_template(
                             'index.html',
-                            error=f"CSV for '{stock}' does not have a 'Date' column. Please upload a valid stock CSV."
+                            error=f"CSV for '{stock}' must have 'Date' and 'Close' columns. Please upload a valid stock CSV."
                         )
-                    # Convert all columns to numeric (except index)
-                    for col in df.columns:
-                        df[col] = pd.to_numeric(df[col], errors='coerce')
-                    # Drop rows with any NaN values (ensures all columns are numeric)
-                    df = df.dropna()
-                    # Now check for 'Close'
-                    if 'Close' not in df.columns:
-                        return render_template(
-                            'index.html',
-                            error=f"CSV for '{stock}' does not have a 'Close' column. Please upload a valid stock CSV."
-                        )
-                    # Check if 'Close' is numeric
-                    if not np.issubdtype(df['Close'].dtype, np.number):
-                        return render_template(
-                            'index.html',
-                            error=f"'Close' column in CSV for '{stock}' is not numeric. Please upload a valid stock CSV."
-                        )
+                    df = df.dropna(subset=['Date'])
+                    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+                    df = df.dropna(subset=['Date'])
+                    df.set_index('Date', inplace=True)
                 except Exception as e:
                     return render_template(
                         'index.html',
@@ -174,8 +154,7 @@ def index():
         plt.close(fig3)
 
         # Save dataset as CSV
-        csv_file_path = f"static/{stock}_dataset.csv"
-        df.to_csv(csv_file_path)
+        df.to_csv("static/POWERGRID.NS_dataset.csv", index=False)
 
         # Return the rendered template with charts and dataset
         return render_template('index.html',
@@ -183,7 +162,7 @@ def index():
                                plot_path_ema_100_200=ema_chart_path_100_200,
                                plot_path_prediction=prediction_chart_path,
                                data_desc=data_desc.to_html(classes='table table-bordered'),
-                               dataset_link=csv_file_path)
+                               dataset_link="static/POWERGRID.NS_dataset.csv")
 
     return render_template('index.html')
 
