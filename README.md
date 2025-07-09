@@ -20,10 +20,9 @@ A Flask-based web application that predicts and visualizes stock price trends fo
 ---
 
 
-
 ## 🖥️ Output Demo
 
-▶️ [Watch Output Demo Video]([https://drive.google.com/your-video-link](https://drive.google.com/file/d/1mLpL5AB8pa6h_AUFt9FhZL6cJYjS06ys/view?usp=sharing))
+▶️ [Watch Output Demo Video](https://drive.google.com/file/d/1mLpL5AB8pa6h_AUFt9FhZL6cJYjS06ys/view?usp=sharing)
 
 
 
