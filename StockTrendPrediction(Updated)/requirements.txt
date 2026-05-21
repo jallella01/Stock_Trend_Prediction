@@ -1,0 +1,10 @@
+pandas
+numpy
+matplotlib
+tensorflow
+pandas_datareader
+twelvedata
+datetime
+plotly
+flask
+python-dotenv
