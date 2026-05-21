@@ -8,210 +8,280 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --main-bg: linear-gradient(135deg, #f8ffae 0%, #43c6ac 100%);
-            --card-bg: rgba(255,255,255,0.97);
-            --primary: #43c6ac;
-            --secondary: #191654;
-            --accent: #f7971e;
-            --danger: #ff5858;
-            --info: #36d1c4;
-            --shadow: 0 8px 32px rgba(67,198,172,0.12), 0 1.5px 6px rgba(25,22,84,0.08);
+            /* Emerald Green & Floating Glass Palette */
+            --bg-color: #f2f9f6; 
+            --neo-card-bg: rgba(255, 255, 255, 0.75);
+            --primary: #10b981; 
+            --primary-hover: #059669;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --danger: #ef4444;
+            --shadow-soft: 0 12px 40px rgba(16, 185, 129, 0.08);
+            --radius-lg: 24px;
+            --radius-md: 12px;
         }
+        
         body {
-            background: var(--main-bg);
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 20%);
             min-height: 100vh;
-            animation: gradientBG 10s ease-in-out infinite alternate;
-            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            color: var(--text-main);
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
+
         .container {
-            max-width: 1100px;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            max-width: 900px;
+            margin-top: 50px;
+            margin-bottom: 50px;
         }
-        .card {
-            border-radius: 22px;
-            box-shadow: var(--shadow);
-            background: var(--card-bg);
-            border: none;
-            transition: box-shadow 0.3s, transform 0.2s;
+
+        /* Floating Glass Card (neo-card style) */
+        .neo-card {
+            background: var(--neo-card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 3rem 2.5rem;
         }
-        .card:hover {
-            box-shadow: 0 16px 48px rgba(67,198,172,0.18), 0 3px 12px rgba(25,22,84,0.12);
-            transform: translateY(-4px) scale(1.01);
+        
+        .neo-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 50px rgba(16, 185, 129, 0.12);
         }
-        .chart-container {
-            margin-top: 30px;
+
+        /* Typography & Headers */
+        h1 {
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            margin-bottom: 1.5rem;
         }
-        .table-responsive {
-            margin-top: 20px;
-        }
-        .download-link {
-            margin-top: 20px;
-        }
-        .footer {
-            margin-top: 40px;
-            padding: 20px 0;
-            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
-            text-align: center;
-            color: #fff;
-            border-radius: 12px;
+        
+        .section-title {
+            color: var(--text-main);
+            font-weight: 600;
             font-size: 1.1rem;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 8px rgba(67,198,172,0.10);
+            margin-bottom: 0;
+            display: inline-block;
         }
+
+        /* Form Controls */
+        .form-label {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1rem;
+            border: 1px solid #cbd5e1;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+            background: #fff;
+            outline: none;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--primary-hover);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-success:hover {
+            background-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Accordion / Collapse Styling */
+        .chart-container {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius-md);
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-link {
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            text-align: left;
+            padding: 10px 5px;
+        }
+        
+        .btn-link:hover, .btn-link:focus {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .collapse img {
+            border-radius: var(--radius-md);
+            margin-top: 15px;
+            border: 1px solid rgba(0,0,0,0.05);
+            width: 100%;
+        }
+
+        /* Badges & Pills */
+        .status-pill {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary-hover);
+            font-weight: 600;
+            padding: 0.35em 0.85em;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            display: inline-block;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+
+        .alert-danger {
+            background-color: #fef2f2;
+            color: var(--danger);
+            border: 1px solid #fecaca;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+        }
+
+        /* Spinner */
         .spinner-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(67,198,172,0.08);
+            background: rgba(242, 249, 246, 0.8);
+            backdrop-filter: blur(4px);
             z-index: 9999;
             display: none;
             align-items: center;
             justify-content: center;
         }
+        
         .spinner-border {
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-        .btn-primary, .btn-success {
-            transition: background 0.2s, box-shadow 0.2s;
-            font-weight: 600;
-            border-radius: 8px;
-            letter-spacing: 1px;
-        }
-        .btn-primary {
-            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
-            border: none;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(90deg, #191654 0%, #43c6ac 100%);
-            box-shadow: 0 2px 8px rgba(67,198,172,0.15);
-            color: #fff;
-        }
-        .btn-success {
-            background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%);
-            color: #191654;
-            border: none;
-        }
-        .btn-success:hover {
-            background: linear-gradient(90deg, #ffd200 0%, #f7971e 100%);
-            color: #191654;
-            box-shadow: 0 2px 8px rgba(247,151,30,0.15);
-        }
-        .btn-link {
             color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.2s;
         }
-        .btn-link:hover {
-            color: var(--accent);
-            text-decoration: underline;
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
-        .collapse img {
-            transition: transform 0.3s;
-        }
-        .collapse.show img {
-            transform: scale(1.03);
-        }
-        .form-label {
-            font-weight: 600;
-            color: var(--secondary);
-            letter-spacing: 1px;
-        }
+
+        /* Logout */
         .logout-btn {
             position: fixed;
-            top: 30px;
-            right: 40px;
-            z-index: 10000;
-            background: #fff;
+            top: 25px;
+            right: 25px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
             border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(67,198,172,0.12);
-            border: none;
-            width: 48px;
-            height: 48px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.6);
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
         }
         .logout-btn:hover {
-            background: #ffe0e0;
+            background: #fef2f2;
+            transform: scale(1.05);
+            border-color: #fecaca;
         }
-        .badge.bg-info {
-            background: linear-gradient(90deg, #43c6ac 0%, #f8ffae 100%);
-            color: #191654 !important;
-            font-weight: 600;
-            border-radius: 6px;
-        }
-        .alert-danger {
-            background: linear-gradient(90deg, #ff5858 0%, #f7971e 100%);
-            color: #fff;
-            border: none;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-        .form-control:focus {
-            border-color: #43c6ac;
-            box-shadow: 0 0 0 0.2rem rgba(67,198,172,0.15);
-        }
-        @media (max-width: 600px) {
-            .container { margin-top: 10px; margin-bottom: 10px; }
-            .footer { font-size: 0.95rem; }
-            .logout-btn { top: 10px; right: 10px; width: 40px; height: 40px; }
+
+        @media (max-width: 768px) {
+            .neo-card { padding: 1.5rem; }
+            .container { margin-top: 20px; }
         }
     </style>
 </head>
 <body>
-    <!-- Optional: Logout Button (show only if user is logged in) -->
     {% if session and session.get('user') %}
     <form action="{{ url_for('logout') }}" method="get">
         <button type="submit" class="logout-btn" title="Logout">
-            <i class="fas fa-sign-out-alt fa-lg" style="color:#ff5858;"></i>
+            <i class="fas fa-sign-out-alt" style="color:var(--danger);"></i>
         </button>
     </form>
     {% endif %}
 
     <div class="spinner-overlay" id="spinnerOverlay">
-        <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status">
+        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+    
     <div class="container">
-        <div class="card p-4">
-            <h1 class="text-center mb-4" style="font-weight:700; letter-spacing:1px; color:var(--secondary);">
-                <i class="fa-solid fa-chart-line" style="color:var(--primary);"></i> Stock Trend Prediction
+        <div class="neo-card">
+            <h1 class="text-center">
+                <i class="fa-solid fa-chart-line" style="color:var(--primary); margin-right: 8px;"></i> Stock Trend Prediction
             </h1>
+            
             {% if error %}
             <div class="alert alert-danger" role="alert">
                 <i class="fa-solid fa-circle-exclamation"></i> {{ error }}
             </div>
             {% endif %}
+            
             <form method="POST" onsubmit="showSpinner()">
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="stock" class="form-label">Enter Stock Ticker:</label>
-                    <input type="text" class="form-control" id="stock" name="stock" value="{{ request.form.stock or 'POWERGRID.NS' }}" required>
-                    <div class="form-text">
-                        Example: <span class="badge bg-info text-dark">POWERGRID.NS</span> <span class="badge bg-info text-dark">RELIANCE.NS</span> <span class="badge bg-info text-dark">AAPL</span>
+                    <input type="text" class="form-control" id="stock" name="stock" value="{{ request.form.stock or 'META' }}" required placeholder="e.g. AAPL">
+                    <div class="form-text mt-2">
+                        Example: 
+                        <span class="status-pill">GOOGL</span> 
+                        <span class="status-pill">AMZN</span> 
+                        <span class="status-pill">AAPL</span>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">
-                    <i class="fa-solid fa-magnifying-glass-chart"></i> Predict
+                    <i class="fa-solid fa-magnifying-glass-chart me-2"></i> Predict Trend
                 </button>
             </form>
             
             {% if plot_path_ema_20_50 %}
             <div class="chart-container">
                 <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#ema20_50" aria-expanded="true">
-                    <i class="fa-solid fa-chart-area"></i> <h5 style="display:inline;">Closing Price vs Time (20 & 50 Days EMA)</h5>
+                    <i class="fa-solid fa-chart-area"></i> <h5 class="section-title">Closing Price (20 & 50 Days EMA)</h5>
                 </button>
                 <div class="collapse show" id="ema20_50">
-                    <img src="{{ url_for('static', filename='ema_20_50.png') }}" class="img-fluid rounded shadow" alt="EMA 20 & 50">
+                    <img src="{{ url_for('static', filename='ema_20_50.png') }}" class="shadow-sm" alt="EMA 20 & 50">
                 </div>
             </div>
             {% endif %}
@@ -219,10 +289,10 @@
             {% if plot_path_ema_100_200 %}
             <div class="chart-container">
                 <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#ema100_200" aria-expanded="false">
-                    <i class="fa-solid fa-chart-area"></i> <h5 style="display:inline;">Closing Price vs Time (100 & 200 Days EMA)</h5>
+                    <i class="fa-solid fa-chart-area"></i> <h5 class="section-title">Closing Price (100 & 200 Days EMA)</h5>
                 </button>
                 <div class="collapse" id="ema100_200">
-                    <img src="{{ url_for('static', filename='ema_100_200.png') }}" class="img-fluid rounded shadow" alt="EMA 100 & 200">
+                    <img src="{{ url_for('static', filename='ema_100_200.png') }}" class="shadow-sm" alt="EMA 100 & 200">
                 </div>
             </div>
             {% endif %}
@@ -230,40 +300,43 @@
             {% if plot_path_prediction %}
             <div class="chart-container">
                 <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#prediction" aria-expanded="false">
-                    <i class="fa-solid fa-robot"></i> <h5 style="display:inline;">Prediction vs Original Trend</h5>
+                    <i class="fa-solid fa-robot"></i> <h5 class="section-title">Prediction vs Original Trend</h5>
                 </button>
                 <div class="collapse" id="prediction">
-                    <img src="{{ url_for('static', filename='stock_prediction.png') }}" class="img-fluid rounded shadow" alt="Prediction vs Original">
+                    <img src="{{ url_for('static', filename='stock_prediction.png') }}" class="shadow-sm" alt="Prediction vs Original">
                 </div>
             </div>
             {% endif %}
             
             {% if data_desc %}
-            <div class="table-responsive">
-                <h4 class="mt-4" style="color:var(--primary);"><i class="fa-solid fa-table"></i> Descriptive Data (Jan 2000 - Nov 2024)</h4>
-                {{ data_desc | safe }}
+            <div class="mt-5">
+                <h5 class="section-title mb-3"><i class="fa-solid fa-table me-2"></i> Descriptive Data (Jan 2000 - Nov 2024)</h5>
+                <div class="table-responsive">
+                    {{ data_desc | safe }}
+                </div>
             </div>
             {% endif %}
             
             {% if dataset_link %}
-            <div class="download-link">
+            <div class="mt-4">
                 <a href="{{ url_for('download_file', filename=dataset_link.split('/')[-1]) }}" class="btn btn-success w-100" download>
-                    <i class="fa-solid fa-download"></i> Download Dataset (CSV)
+                    <i class="fa-solid fa-download me-2"></i> Download Dataset (CSV)
                 </a>
             </div>
             {% endif %}
         </div>
-        <div class="footer mt-5">
-            &copy; {{ 2025 }} Stock Trend Prediction | Powered by <span style="color:var(--primary);">Flask</span> &amp; <span style="color:var(--accent);">LSTM</span> | Designed by <b>Karthikeya</b>
+        
+        <div class="footer">
+            &copy; 2026 Stock Trend Prediction | Powered by Flask &amp; LSTM | Designed by <b>Karthikeya</b>
         </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <script>
         function showSpinner() {
             document.getElementById('spinnerOverlay').style.display = 'flex';
         }
-        // Optional: auto-hide spinner after 30s in case of error
         setTimeout(() => {
             document.getElementById('spinnerOverlay').style.display = 'none';
         }, 30000);
